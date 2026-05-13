@@ -4,19 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perplexity — Dark Theme</title>
-  <!-- FontAwesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!--
-    NOTE: This recreates the Perplexity AI homepage layout in a dark theme
-    using the provided custom CSS variable color system.
-    Layout: Left sidebar + top nav + centered hero search UI.
+    NOTE: SPA with two pages — Home and Patents.
+    Top nav "Patents" click shows patents page; other links show home.
+    Same sidebar + topnav shell persists across both views.
+    All colors from user-provided CSS variable palette.
   -->
 
   <style>
-    /* ─── CSS VARIABLES (user-provided palette) ─── */
+    /* ─── CSS VARIABLES ─── */
     :root {
       --0: rgb(0 0 0 / 0);
       --a: #3afacb;
@@ -24,19 +23,10 @@
       --aa: #00d7a3;
       --aa-t: rgb(0 215 163 / 22%);
       --aaa: linear-gradient(135deg, #2BB9C2 0%, #39D3C6 35%, #2FE0B7 65%, #18C79C 100%);
-      --lgaa: linear-gradient(135deg, #2BB9C2 0%, #39D3C6 35%, #2FE0B7 65%, #18C79C 100%);
       --b: #04090d;
-      --bt: rgb(4 9 13 / 44%);
-      --b-t: rgb(9 18 24 / 44%);
       --b1: #0a1218;
-      --b1-t: rgb(10 18 24 / 88%);
-      --bg: rgba(0, 0, 0, .75);
-      --bg-t: rgb(0 0 0 / 44%);
       --bcc: #0c141a;
       --b-t22: rgb(255 255 255 / 22%);
-      --b-t44: rgb(255 255 255 / 44%);
-      --b-t77: rgb(255 255 255 / 77%);
-      --b-t88: #151827;
       --b-t95: #2D2F3E;
       --bc: rgb(255 255 255 / 6%);
       --bc-t: rgb(255 255 255 / 10%);
@@ -45,252 +35,148 @@
       --c-t: rgb(232 246 255 / 77%);
       --c0: #8fa3ad;
       --c0-t: rgb(143 163 173 / 77%);
-      --c1: #0f1b22;
-      --c1-t: rgb(15 27 34 / 77%);
       --btn: linear-gradient(135deg, #2BB9C2 0%, #39D3C6 35%, #2FE0B7 65%, #18C79C 100%);
-      --btn1: var(--btn);
-      --btn2: var(--btn);
-      --btn3: var(--btn);
-      --btn4: var(--btn);
       --ff: 'Poppins', sans-serif;
-      --fs: 1em;
-      --fs-xl: 4em;
-      --fs-l: 2em;
       --fs-m: 1em;
       --fs-s: .77em;
-      --fs-xs: .44em;
+      --fs-xs: .55em;
       --fw-n: 400;
       --fw-b: 700;
       --lh: 1.5;
-      --s: 18px;
       --s-xl: 44px;
       --s-l: 18px;
       --s-m: 11px;
       --s-s: 7px;
       --s-xs: 4px;
-      --br: 22px;
       --br-xl: 44px;
       --br-l: 22px;
       --br-m: 11px;
       --br-s: 7px;
       --br-xs: 4px;
       --z1: 1000;
-      --z2: 999;
-      --z3: 998;
       --t-fast: .2s ease-in-out;
       --t-normal: .3s ease-in-out;
       --t-slow: .5s ease-in-out;
       --bss: 0 14px 40px rgb(0 0 0 / 65%);
       --bs-bs: 0 0 2px rgb(0 0 0 / 80%), 0 14px 40px rgb(0 0 0 / 65%), inset 0 0 0 .5px rgb(255 255 255 / 10%);
-      --lg: linear-gradient(90deg, rgba(255,255,255,.03), rgba(255,255,255,.08), rgba(255,255,255,.03));
-      --lg1: linear-gradient(90deg, rgba(58,250,203,.06), rgba(58,250,203,.18), rgba(58,250,203,.06));
       --lg-b: linear-gradient(135deg, #3afacb 0%, #00d7a3 50%, #7dffcf 100%);
-      --blur: blur(44px);
-      --blur-s: blur(22px);
       --nx-glow: rgb(57 211 198 / 35%);
       --nx-glow-strong: rgb(47 224 183 / 55%);
     }
 
-    /* ─── RESET ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; font-family: var(--ff); background: var(--b); color: var(--c); }
 
-    /* ─── APP WRAPPER ─── */
-    /* CSS: Full-height flex layout matching screenshot's two-column structure */
-    app {
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
+    /* ─── APP SHELL ─── */
+    app { display: flex; height: 100vh; overflow: hidden; }
 
-    /* ════════════════════════════════════════
+    /* ════════════════════════
        SIDEBAR
-    ════════════════════════════════════════ */
-    /* CSS: Left sidebar — dark panel with nav items, matching screenshot width ~160px */
+    ════════════════════════ */
     sdbar {
-      display: flex;
-      flex-direction: column;
-      width: 168px;
-      min-width: 168px;
+      display: flex; flex-direction: column;
+      width: 168px; min-width: 168px;
       background: var(--b1);
       border-right: 1px solid var(--bor);
       padding: var(--s-m) 0;
-      position: relative;
       z-index: var(--z1);
       transition: width var(--t-normal);
     }
 
-    /* CSS: Sidebar header — logo + collapse toggle */
     sdbar hd {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
       padding: var(--s-s) var(--s-m) var(--s-m);
     }
 
-    /* CSS: Logo icon — teal gradient star-like shape */
     .logo-icon {
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       background: var(--btn);
       border-radius: var(--br-s);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: var(--b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: var(--b);
       box-shadow: 0 0 14px var(--nx-glow);
       flex-shrink: 0;
     }
 
-    .logo-icon i { font-size: 13px; }
-
-    /* CSS: Sidebar toggle button */
     .sdbar-toggle {
-      background: none;
-      border: none;
-      color: var(--c0);
-      cursor: pointer;
-      padding: var(--s-xs);
-      border-radius: var(--br-xs);
+      background: none; border: none;
+      color: var(--c0); cursor: pointer;
+      padding: var(--s-xs); border-radius: var(--br-xs);
       font-size: 13px;
       transition: color var(--t-fast), background var(--t-fast);
     }
     .sdbar-toggle:hover { color: var(--c); background: var(--bc-t); }
 
-    /* CSS: Sidebar body — nav list */
     sdbar bd {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      padding: var(--s-xs) var(--s-s);
-      gap: 2px;
-      overflow-y: auto;
+      display: flex; flex-direction: column;
+      flex: 1; padding: var(--s-xs) var(--s-s);
+      gap: 2px; overflow-y: auto;
     }
 
-    /* CSS: Nav item — icon + label row */
     navi {
-      display: flex;
-      align-items: center;
-      gap: var(--s-s);
-      padding: 8px var(--s-s);
+      display: flex; align-items: center;
+      gap: var(--s-s); padding: 8px var(--s-s);
       border-radius: var(--br-s);
-      cursor: pointer;
-      font-size: var(--fs-s);
-      color: var(--c0);
+      cursor: pointer; font-size: var(--fs-s);
+      color: var(--c0); white-space: nowrap; overflow: hidden;
       transition: background var(--t-fast), color var(--t-fast);
-      white-space: nowrap;
-      overflow: hidden;
     }
     navi:hover { background: var(--bc-t); color: var(--c); }
-    navi.active {
-      background: var(--a-t);
-      color: var(--a);
-    }
-    navi i {
-      font-size: 14px;
-      width: 16px;
-      text-align: center;
-      flex-shrink: 0;
-    }
+    navi.active { background: var(--a-t); color: var(--a); }
+    navi i { font-size: 14px; width: 16px; text-align: center; flex-shrink: 0; }
     navi.active i { color: var(--a); }
 
-    /* CSS: "No recent threads" label in sidebar */
     .no-threads {
-      font-size: var(--fs-xs);
-      color: var(--c0-t);
-      padding: var(--s-s) var(--s-m);
-      letter-spacing: .02em;
+      font-size: var(--fs-xs); color: var(--c0-t);
+      padding: var(--s-s) var(--s-m); letter-spacing: .02em;
     }
 
-    /* CSS: Sidebar footer — Sign In button */
-    sdbar ft {
-      padding: var(--s-s);
-      border-top: 1px solid var(--bor);
-    }
+    sdbar ft { padding: var(--s-s); border-top: 1px solid var(--bor); }
 
     .signin-row {
-      display: flex;
-      align-items: center;
-      gap: var(--s-s);
-      padding: 9px var(--s-s);
-      border-radius: var(--br-s);
-      cursor: pointer;
+      display: flex; align-items: center;
+      gap: var(--s-s); padding: 9px var(--s-s);
+      border-radius: var(--br-s); cursor: pointer;
       transition: background var(--t-fast);
     }
     .signin-row:hover { background: var(--bc-t); }
 
     .signin-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--b-t95);
-      border: 1px solid var(--bor);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: var(--c0);
-      flex-shrink: 0;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--b-t95); border: 1px solid var(--bor);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--c0); flex-shrink: 0;
     }
+    .signin-label { font-size: var(--fs-s); color: var(--c0); flex: 1; }
+    .signin-expand { font-size: 9px; color: var(--c0); }
 
-    .signin-label {
-      font-size: var(--fs-s);
-      color: var(--c0);
-      flex: 1;
-    }
-
-    .signin-expand {
-      font-size: 10px;
-      color: var(--c0);
-    }
-
-    /* ════════════════════════════════════════
-       MAIN CONTENT AREA
-    ════════════════════════════════════════ */
-    /* CSS: Right panel — top nav + hero center */
-    main {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      overflow: hidden;
-    }
+    /* ════════════════════════
+       MAIN COLUMN
+    ════════════════════════ */
+    main { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
 
     /* ─── TOP NAV ─── */
-    /* CSS: Horizontal nav bar — centered links, matching screenshot */
     topn {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: center;
       padding: 14px var(--s-l);
       border-bottom: 1px solid var(--bor);
-      gap: var(--s-l);
       flex-shrink: 0;
     }
 
-    navl {
-      display: flex;
-      align-items: center;
-      gap: var(--s-l);
-    }
+    navl { display: flex; align-items: center; gap: var(--s-l); }
 
     navl a {
-      font-size: var(--fs-s);
-      color: var(--c0);
-      text-decoration: none;
-      letter-spacing: .01em;
-      font-weight: var(--fw-n);
+      font-size: var(--fs-s); color: var(--c0);
+      text-decoration: none; letter-spacing: .01em;
+      padding: 4px 0; position: relative; cursor: pointer;
       transition: color var(--t-fast);
-      padding: 4px 0;
-      position: relative;
     }
     navl a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
+      content: ''; position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
       background: var(--a);
       transition: width var(--t-fast);
     }
@@ -299,80 +185,29 @@
     navl a.active { color: var(--a); }
     navl a.active::after { width: 100%; }
 
-    /* ─── HERO AREA ─── */
-    /* CSS: Centered hero with wordmark + search box */
-    hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      padding: var(--s-xl);
-      gap: var(--s-l);
-      position: relative;
-      overflow: hidden;
+    /* ════════════════════════════════════════
+       PAGE CONTAINER
+    ════════════════════════════════════════ */
+    pgwrap { flex: 1; position: relative; overflow: hidden; }
+
+    page {
+      display: flex; flex-direction: column;
+      position: absolute; inset: 0;
+      overflow-y: auto;
+      opacity: 0; pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity var(--t-normal), transform var(--t-normal);
+    }
+    page.active {
+      opacity: 1; pointer-events: all;
+      transform: translateY(0);
     }
 
-    /* CSS: Ambient glow background effect behind hero */
-    hero::before {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 300px;
-      background: radial-gradient(ellipse, var(--nx-glow) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-      pointer-events: none;
-      animation: glowPulse 4s ease-in-out infinite;
-    }
-
-    @keyframes glowPulse {
-      0%, 100% { opacity: .5; transform: translate(-50%, -60%) scale(1); }
-      50% { opacity: 1; transform: translate(-50%, -60%) scale(1.1); }
-    }
-
-    /* CSS: Brand wordmark — large, light-weight, matching screenshot */
-    hero hd {
-      position: relative;
-      z-index: 2;
-      animation: fadeSlideDown .6s ease-out both;
-    }
-
-    @keyframes fadeSlideDown {
-      from { opacity: 0; transform: translateY(-18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .wordmark {
-      font-size: clamp(2.4em, 5vw, 3.8em);
-      font-weight: 300;
-      letter-spacing: -.03em;
-      background: var(--lg-b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-
-    /* ─── SEARCH BOX ─── */
-    /* CSS: Main search card — white-bordered rounded box */
-    hero bd {
-      width: 100%;
-      max-width: 680px;
-      position: relative;
-      z-index: 2;
-      animation: fadeSlideUp .7s ease-out .15s both;
-    }
-
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    /* ════════════════════════
+       SHARED SEARCH BOX
+    ════════════════════════ */
     srch {
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       background: var(--bcc);
       border: 1px solid var(--bor);
       border-radius: var(--br-l);
@@ -384,156 +219,272 @@
       border-color: rgb(58 250 203 / 30%);
       box-shadow: 0 0 0 3px var(--a-t), var(--bss);
     }
-
-    /* CSS: Search textarea area */
-    srch bd {
-      padding: var(--s-m) var(--s-l);
-    }
-
-    srch bd textarea {
-      width: 100%;
-      background: none;
-      border: none;
-      outline: none;
-      color: var(--c);
-      font-family: var(--ff);
-      font-size: var(--fs-m);
-      font-weight: var(--fw-n);
-      resize: none;
-      line-height: var(--lh);
+    srch bd { padding: var(--s-m) var(--s-l); }
+    srch bd textarea, srch bd input {
+      width: 100%; background: none; border: none; outline: none;
+      color: var(--c); font-family: var(--ff);
+      font-size: var(--fs-m); resize: none; line-height: var(--lh);
       min-height: 44px;
-      max-height: 200px;
     }
-    srch bd textarea::placeholder { color: var(--c0); }
+    srch bd textarea::placeholder,
+    srch bd input::placeholder { color: var(--c0); }
 
-    /* CSS: Search footer — actions toolbar */
     srch ft {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
       padding: var(--s-s) var(--s-m);
       border-top: 1px solid var(--bor);
       background: var(--bc);
     }
 
-    .srch-left {
-      display: flex;
-      align-items: center;
-      gap: var(--s-xs);
-    }
+    .srch-left  { display: flex; align-items: center; gap: var(--s-xs); }
+    .srch-right { display: flex; align-items: center; gap: var(--s-s); }
 
-    .srch-right {
-      display: flex;
-      align-items: center;
-      gap: var(--s-s);
+    .plus-btn {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: 1px solid var(--bor);
+      border-radius: var(--br-xs); color: var(--c0);
+      cursor: pointer; font-size: 13px;
+      transition: background var(--t-fast), color var(--t-fast);
     }
+    .plus-btn:hover { background: var(--bc-t); color: var(--c); }
 
-    /* CSS: Small toolbar buttons */
     .tool-btn {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      background: none;
-      border: 1px solid var(--bor);
-      border-radius: var(--br-m);
-      color: var(--c0);
-      cursor: pointer;
-      padding: 5px 10px;
-      font-family: var(--ff);
-      font-size: var(--fs-s);
-      transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+      display: flex; align-items: center; gap: 5px;
+      background: none; border: 1px solid var(--bor);
+      border-radius: var(--br-m); color: var(--c0);
+      cursor: pointer; padding: 5px 10px;
+      font-family: var(--ff); font-size: var(--fs-s);
+      transition: background var(--t-fast), color var(--t-fast);
     }
-    .tool-btn:hover {
-      background: var(--bc-t);
-      color: var(--c);
-      border-color: var(--b-t22);
-    }
+    .tool-btn:hover { background: var(--bc-t); color: var(--c); }
     .tool-btn i { font-size: 11px; }
 
-    /* CSS: Icon-only small button */
     .icon-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 30px;
-      background: none;
-      border: 1px solid var(--bor);
-      border-radius: var(--br-s);
-      color: var(--c0);
-      cursor: pointer;
-      font-size: 12px;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: 1px solid var(--bor);
+      border-radius: var(--br-s); color: var(--c0);
+      cursor: pointer; font-size: 12px;
       transition: background var(--t-fast), color var(--t-fast);
     }
     .icon-btn:hover { background: var(--bc-t); color: var(--c); }
 
-    /* CSS: Model selector pill */
     .model-btn {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      background: none;
-      border: none;
-      color: var(--c0);
-      cursor: pointer;
-      font-family: var(--ff);
-      font-size: var(--fs-s);
+      display: flex; align-items: center; gap: 4px;
+      background: none; border: none; color: var(--c0);
+      cursor: pointer; font-family: var(--ff); font-size: var(--fs-s);
       transition: color var(--t-fast);
     }
     .model-btn:hover { color: var(--c); }
     .model-btn i { font-size: 9px; }
 
-    /* CSS: Mic button — subtle icon */
     .mic-btn {
-      background: none;
-      border: none;
-      color: var(--c0);
-      cursor: pointer;
-      font-size: 14px;
-      padding: 4px;
+      background: none; border: none; color: var(--c0);
+      cursor: pointer; font-size: 14px; padding: 4px;
       transition: color var(--t-fast);
     }
     .mic-btn:hover { color: var(--a); }
 
-    /* CSS: Submit button — teal gradient circle with waveform icon */
+    /* CSS: Waveform submit — home page */
     .submit-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: var(--btn);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--b);
-      font-size: 14px;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--btn); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--b); font-size: 14px;
       box-shadow: 0 0 14px var(--nx-glow);
       transition: box-shadow var(--t-fast), transform var(--t-fast);
     }
-    .submit-btn:hover {
-      box-shadow: 0 0 22px var(--nx-glow-strong);
-      transform: scale(1.07);
+    .submit-btn:hover { box-shadow: 0 0 22px var(--nx-glow-strong); transform: scale(1.07); }
+
+    /* CSS: Arrow submit — patents page */
+    .arrow-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--bcc); border: 1px solid var(--bor);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c0); font-size: 13px;
+      transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+    }
+    .arrow-btn:hover {
+      background: var(--btn); color: var(--b);
+      border-color: transparent;
+      box-shadow: 0 0 14px var(--nx-glow);
     }
 
-    /* CSS: Plus add button */
-    .plus-btn {
-      width: 28px;
-      height: 28px;
-      display: flex;
+    /* ════════════════════════════════════════
+       HOME PAGE — hero
+    ════════════════════════════════════════ */
+    hero {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      flex: 1; padding: var(--s-xl); gap: var(--s-l);
+      position: relative; min-height: 100%;
+    }
+
+    hero::before {
+      content: '';
+      position: absolute; width: 500px; height: 300px;
+      background: radial-gradient(ellipse, var(--nx-glow) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: .5; transform: translate(-50%, -60%) scale(1); }
+      50%       { opacity: 1; transform: translate(-50%, -60%) scale(1.1); }
+    }
+
+    hero hd { position: relative; z-index: 2; }
+
+    .wordmark {
+      font-size: clamp(2.4em, 5vw, 3.8em);
+      font-weight: 300; letter-spacing: -.03em;
+      background: var(--lg-b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text; line-height: 1;
+    }
+
+    hero bd { width: 100%; max-width: 680px; position: relative; z-index: 2; }
+
+    /* ════════════════════════════════════════
+       PATENTS PAGE
+    ════════════════════════════════════════ */
+    ptnt {
+      display: flex; flex-direction: column;
       align-items: center;
-      justify-content: center;
-      background: none;
+      width: 100%; max-width: 860px;
+      margin: 0 auto;
+      padding: 56px var(--s-l) var(--s-xl);
+      gap: 28px;
+    }
+
+    /* CSS: "perplexity patents" heading */
+    ptnt hd { text-align: center; }
+
+    .ptnt-title {
+      font-size: clamp(2em, 4vw, 3em);
+      font-weight: 300; letter-spacing: -.03em; line-height: 1;
+    }
+    .ptnt-title strong {
+      font-weight: 600;
+      background: var(--lg-b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    ptnt bd {
+      width: 100%; display: flex;
+      flex-direction: column; gap: 14px;
+    }
+
+    /* CSS: Quick-filter pills */
+    qkfl { display: flex; gap: var(--s-s); width: 100%; }
+
+    qkfl bt {
+      flex: 1; display: flex; align-items: center;
+      justify-content: center; gap: 7px;
+      padding: 10px 14px; background: none;
       border: 1px solid var(--bor);
-      border-radius: var(--br-xs);
-      color: var(--c0);
+      border-radius: var(--br-m); color: var(--c0);
+      font-family: var(--ff); font-size: var(--fs-s);
       cursor: pointer;
-      font-size: 13px;
+      transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+    }
+    qkfl bt:hover { background: var(--a-t); color: var(--a); border-color: rgb(58 250 203 / 25%); }
+    qkfl bt.active { background: var(--a-t); color: var(--a); border-color: rgb(58 250 203 / 30%); }
+    qkfl bt i { font-size: 12px; }
+
+    /* CSS: Accordion wrapper */
+    .acc-wrap { width: 100%; }
+
+    acc {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 14px var(--s-l);
+      background: var(--bcc);
+      border: 1px solid var(--bor);
+      border-radius: var(--br-m);
+      cursor: pointer; font-size: var(--fs-s);
+      color: var(--c0); user-select: none;
       transition: background var(--t-fast), color var(--t-fast);
     }
-    .plus-btn:hover { background: var(--bc-t); color: var(--c); }
+    acc:hover { background: var(--bc-t); color: var(--c); }
+    acc i { font-size: 12px; transition: transform var(--t-fast); }
+    acc.open i { transform: rotate(180deg); }
+    acc.open { border-radius: var(--br-m) var(--br-m) 0 0; }
 
-    /* ─── SIDEBAR COLLAPSED STATE ─── */
+    .acc-body {
+      display: none; padding: var(--s-m) var(--s-l) var(--s-l);
+      background: var(--bcc);
+      border: 1px solid var(--bor); border-top: none;
+      border-radius: 0 0 var(--br-m) var(--br-m);
+      font-size: var(--fs-s); color: var(--c0);
+      line-height: var(--lh);
+      flex-direction: column; gap: var(--s-s);
+    }
+    .acc-body.open { display: flex; }
+    .acc-body p span { color: var(--a); }
+
+    /* CSS: Explore by category */
+    ptnt ft { width: 100%; display: flex; flex-direction: column; gap: var(--s-m); }
+
+    .cat-label {
+      font-size: var(--fs-s); color: var(--c-t);
+      font-weight: 500; letter-spacing: .01em;
+    }
+
+    catrow { display: flex; align-items: center; position: relative; }
+
+    catscr {
+      display: flex; gap: 14px;
+      overflow-x: auto; flex: 1;
+      scroll-behavior: smooth;
+      scrollbar-width: none; padding-bottom: 4px;
+    }
+    catscr::-webkit-scrollbar { display: none; }
+
+    /* CSS: Each category image card */
+    catc {
+      flex: 0 0 calc(33.33% - 10px);
+      min-width: 200px; height: 195px;
+      border-radius: var(--br-m); overflow: hidden;
+      position: relative; cursor: pointer;
+    }
+    catc img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform var(--t-slow);
+    }
+    catc:hover img { transform: scale(1.05); }
+
+    .cat-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.08) 55%, transparent 100%);
+    }
+    .cat-name {
+      position: absolute; bottom: 14px; left: 14px;
+      font-size: var(--fs-s); font-weight: 600;
+      color: #fff; letter-spacing: .01em;
+    }
+
+    .cat-next {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bcc); border: 1px solid var(--bor);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c); cursor: pointer; font-size: 13px;
+      flex-shrink: 0; margin-left: var(--s-s);
+      box-shadow: var(--bss);
+      transition: background var(--t-fast), box-shadow var(--t-fast);
+    }
+    .cat-next:hover { background: var(--bc-t); box-shadow: 0 0 14px var(--nx-glow); }
+
+    /* ─── COLLAPSED SIDEBAR ─── */
     app.collapsed sdbar { width: 52px; min-width: 52px; }
     app.collapsed sdbar hd { justify-content: center; }
     app.collapsed navi span { display: none; }
@@ -542,209 +493,298 @@
     app.collapsed .no-threads { display: none; }
     app.collapsed .sdbar-toggle { display: none; }
 
-    /* ─── RESPONSIVE ─── */
     @media (max-width: 640px) {
       sdbar { width: 52px; min-width: 52px; }
       sdbar hd { justify-content: center; }
       navi span { display: none; }
-      .signin-label, .signin-expand { display: none; }
-      .no-threads { display: none; }
-      .sdbar-toggle { display: none; }
+      .signin-label, .signin-expand, .no-threads { display: none; }
+      qkfl { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
-<!-- HTML: App root wrapper -->
 <app id="app">
 
-  <!-- HTML: Left sidebar navigation -->
+  <!-- ── SIDEBAR ── -->
   <sdbar>
-
-    <!-- HTML: Sidebar header — logo + collapse toggle -->
     <hd>
-      <div class="logo-icon">
-        <i class="fa-solid fa-asterisk"></i>
-      </div>
-      <button class="sdbar-toggle" id="collapseBtn" title="Toggle sidebar">
-        <i class="fa-regular fa-sidebar"></i>
+      <div class="logo-icon"><i class="fa-solid fa-asterisk"></i></div>
+      <button class="sdbar-toggle" id="collapseBtn">
+        <i class="fa-solid fa-bars"></i>
       </button>
     </hd>
 
-    <!-- HTML: Sidebar body — nav items list -->
     <bd>
-
-      <!-- HTML: Nav item — New -->
-      <navi class="active" onclick="setActive(this)">
-        <i class="fa-solid fa-plus"></i>
-        <span>New</span>
+      <navi class="active" onclick="setNaviActive(this)">
+        <i class="fa-solid fa-plus"></i><span>New</span>
       </navi>
-
-      <!-- HTML: Nav item — Computer -->
-      <navi onclick="setActive(this)">
-        <i class="fa-regular fa-desktop"></i>
-        <span>Computer</span>
+      <navi onclick="setNaviActive(this)">
+        <i class="fa-regular fa-desktop"></i><span>Computer</span>
       </navi>
-
-      <!-- HTML: Nav item — Spaces -->
-      <navi onclick="setActive(this)">
-        <i class="fa-regular fa-object-group"></i>
-        <span>Spaces</span>
+      <navi onclick="setNaviActive(this)">
+        <i class="fa-regular fa-object-group"></i><span>Spaces</span>
       </navi>
-
-      <!-- HTML: Nav item — Artefacts -->
-      <navi onclick="setActive(this)">
-        <i class="fa-regular fa-layer-group"></i>
-        <span>Artefacts</span>
+      <navi onclick="setNaviActive(this)">
+        <i class="fa-regular fa-layer-group"></i><span>Artefacts</span>
       </navi>
-
-      <!-- HTML: Nav item — Customise -->
-      <navi onclick="setActive(this)">
-        <i class="fa-regular fa-circle-half-stroke"></i>
-        <span>Customise</span>
+      <navi onclick="setNaviActive(this)">
+        <i class="fa-regular fa-circle-half-stroke"></i><span>Customise</span>
       </navi>
-
-      <!-- HTML: Nav item — History -->
-      <navi onclick="setActive(this)">
-        <i class="fa-regular fa-clock-rotate-left"></i>
-        <span>History</span>
+      <navi onclick="setNaviActive(this)">
+        <i class="fa-regular fa-clock-rotate-left"></i><span>History</span>
       </navi>
-
-      <!-- HTML: Empty threads placeholder -->
       <p class="no-threads">No recent threads</p>
-
     </bd>
 
-    <!-- HTML: Sidebar footer — sign in row -->
     <ft>
       <div class="signin-row">
-        <div class="signin-avatar">
-          <i class="fa-regular fa-user"></i>
-        </div>
+        <div class="signin-avatar"><i class="fa-regular fa-user"></i></div>
         <span class="signin-label">Sign In</span>
-        <i class="fa-solid fa-chevron-right signin-expand" style="font-size:9px;"></i>
+        <i class="fa-solid fa-chevron-right signin-expand"></i>
       </div>
     </ft>
-
   </sdbar>
 
-  <!-- HTML: Main content column -->
+  <!-- ── MAIN ── -->
   <main>
 
-    <!-- HTML: Top navigation bar — discover/finance/health links -->
+    <!-- Top nav -->
     <topn>
       <navl>
-        <a href="#" class="active">Discover</a>
-        <a href="#">Finance</a>
-        <a href="#">Health</a>
-        <a href="#">Academic</a>
-        <a href="#">Patents</a>
+        <!-- JS: Each link calls switchPage; Patents opens patents page -->
+        <a onclick="switchPage('home', this)" class="active">Discover</a>
+        <a onclick="switchPage('home', this)">Finance</a>
+        <a onclick="switchPage('home', this)">Health</a>
+        <a onclick="switchPage('home', this)">Academic</a>
+        <a onclick="switchPage('patents', this)">Patents</a>
       </navl>
     </topn>
 
-    <!-- HTML: Hero section — wordmark + search box -->
-    <hero>
+    <!-- Page container -->
+    <pgwrap>
 
-      <!-- HTML: Brand wordmark -->
-      <hd>
-        <h1 class="wordmark">perplexity</h1>
-      </hd>
-
-      <!-- HTML: Search box body -->
-      <bd>
-        <srch>
-
-          <!-- HTML: Text input area -->
+      <!-- ══ HOME PAGE ══ -->
+      <page id="page-home" class="active">
+        <hero>
+          <hd><h1 class="wordmark">perplexity</h1></hd>
           <bd>
-            <textarea
-              id="searchInput"
-              rows="1"
-              placeholder="Type @ for connectors and sources"
-              oninput="autoGrow(this)"
-            ></textarea>
+            <srch>
+              <bd>
+                <textarea id="homeInput" rows="1"
+                  placeholder="Type @ for connectors and sources"
+                  oninput="autoGrow(this)"></textarea>
+              </bd>
+              <ft>
+                <div class="srch-left">
+                  <button class="plus-btn"><i class="fa-solid fa-plus"></i></button>
+                  <button class="tool-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Search
+                    <i class="fa-solid fa-chevron-down"></i>
+                  </button>
+                  <button class="icon-btn"><i class="fa-regular fa-image"></i></button>
+                </div>
+                <div class="srch-right">
+                  <button class="model-btn">Model <i class="fa-solid fa-chevron-down"></i></button>
+                  <button class="mic-btn"><i class="fa-solid fa-microphone"></i></button>
+                  <button class="submit-btn" id="homeSubmit">
+                    <i class="fa-solid fa-waveform-lines"></i>
+                  </button>
+                </div>
+              </ft>
+            </srch>
+          </bd>
+        </hero>
+      </page>
+
+      <!-- ══ PATENTS PAGE ══ -->
+      <page id="page-patents">
+        <ptnt>
+
+          <!-- Heading -->
+          <hd>
+            <h1 class="ptnt-title">
+              <strong>perplexity</strong> patents
+            </h1>
+          </hd>
+
+          <bd>
+            <!-- Search box -->
+            <srch>
+              <bd>
+                <input type="text" id="patentInput"
+                  placeholder="Ask any question about patents" />
+              </bd>
+              <ft>
+                <div class="srch-left">
+                  <button class="plus-btn"><i class="fa-solid fa-plus"></i></button>
+                  <button class="tool-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Search
+                    <i class="fa-solid fa-chevron-down"></i>
+                  </button>
+                  <button class="icon-btn"><i class="fa-regular fa-image"></i></button>
+                </div>
+                <div class="srch-right">
+                  <button class="arrow-btn" id="patentSubmit">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </ft>
+            </srch>
+
+            <!-- Quick filters -->
+            <qkfl>
+              <bt class="active" onclick="toggleFilter(this)">
+                <i class="fa-solid fa-magnifying-glass"></i> Patentability
+              </bt>
+              <bt onclick="toggleFilter(this)">
+                <i class="fa-solid fa-diagram-project"></i> Technology Landscape
+              </bt>
+              <bt onclick="toggleFilter(this)">
+                <i class="fa-solid fa-flask"></i> R&amp;D
+              </bt>
+            </qkfl>
+
+            <!-- Accordion -->
+            <div class="acc-wrap">
+              <acc id="accHead" onclick="toggleAcc()">
+                <span>New to patent search? Learn how to use this tool</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </acc>
+              <div class="acc-body" id="accBody">
+                <p>Start by typing a <span>technology description</span> or an existing patent number into the search box above.</p>
+                <p>Use <span>Patentability</span> to check if your idea is novel, <span>Technology Landscape</span> to explore filed patents, and <span>R&amp;D</span> to discover research directions.</p>
+                <p>Add <span>@sources</span> or <span>@connectors</span> to refine results to specific databases or jurisdictions.</p>
+              </div>
+            </div>
           </bd>
 
-          <!-- HTML: Search toolbar footer -->
+          <!-- Explore by category -->
           <ft>
+            <p class="cat-label">Explore by category</p>
+            <catrow>
+              <catscr id="catScr">
 
-            <!-- HTML: Left actions: plus, search mode, image -->
-            <div class="srch-left">
-              <button class="plus-btn" title="Attach">
-                <i class="fa-solid fa-plus"></i>
-              </button>
-              <button class="tool-btn">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Search
-                <i class="fa-solid fa-chevron-down"></i>
-              </button>
-              <button class="icon-btn" title="Image mode">
-                <i class="fa-regular fa-image"></i>
-              </button>
-            </div>
+                <catc>
+                  <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&auto=format&fit=crop"
+                       alt="Circuit board — Computers & Software">
+                  <div class="cat-overlay"></div>
+                  <span class="cat-name">Computers &amp; Software</span>
+                </catc>
 
-            <!-- HTML: Right actions: model, mic, submit -->
-            <div class="srch-right">
-              <button class="model-btn">
-                Model
-                <i class="fa-solid fa-chevron-down"></i>
-              </button>
-              <button class="mic-btn" title="Voice input">
-                <i class="fa-solid fa-microphone"></i>
-              </button>
-              <button class="submit-btn" id="submitBtn" title="Send">
-                <i class="fa-solid fa-waveform-lines"></i>
-              </button>
-            </div>
+                <catc>
+                  <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop"
+                       alt="Capsules — Medical & Healthcare Technology">
+                  <div class="cat-overlay"></div>
+                  <span class="cat-name">Medical &amp; Healthcare Technology</span>
+                </catc>
 
+                <catc>
+                  <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop"
+                       alt="Machinery gears — Industrial Machinery">
+                  <div class="cat-overlay"></div>
+                  <span class="cat-name">Industrial Machinery</span>
+                </catc>
+
+                <catc>
+                  <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&auto=format&fit=crop"
+                       alt="Wind turbines — Energy & Environment">
+                  <div class="cat-overlay"></div>
+                  <span class="cat-name">Energy &amp; Environment</span>
+                </catc>
+
+                <catc>
+                  <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f3?w=600&auto=format&fit=crop"
+                       alt="DNA — Biotechnology">
+                  <div class="cat-overlay"></div>
+                  <span class="cat-name">Biotechnology</span>
+                </catc>
+
+              </catscr>
+
+              <button class="cat-next" onclick="scrollCats()">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </catrow>
           </ft>
-        </srch>
-      </bd>
 
-    </hero>
+        </ptnt>
+      </page>
+
+    </pgwrap>
   </main>
 
 </app>
 
 <script>
-  // JS: Sidebar collapse toggle inferred from sidebar toggle button in screenshot
-  const app = document.getElementById('app');
-  const collapseBtn = document.getElementById('collapseBtn');
-
-  collapseBtn.addEventListener('click', () => {
-    app.classList.toggle('collapsed');
+  // JS: Sidebar collapse
+  document.getElementById('collapseBtn').addEventListener('click', () => {
+    document.getElementById('app').classList.toggle('collapsed');
   });
 
-  // JS: Active nav item switching — inferred from highlighted "New" item in sidebar
-  function setActive(el) {
+  // JS: Sidebar nav item active state
+  function setNaviActive(el) {
     document.querySelectorAll('navi').forEach(n => n.classList.remove('active'));
     el.classList.add('active');
   }
 
-  // JS: Auto-grow textarea on input — inferred from flexible search box height
+  // JS: Top nav page switching — clicking "Patents" shows patents page, others show home
+  function switchPage(pageId, linkEl) {
+    // Switch active top-nav link
+    document.querySelectorAll('navl a').forEach(a => a.classList.remove('active'));
+    linkEl.classList.add('active');
+
+    // Hide all pages, show target
+    document.querySelectorAll('page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.add('active');
+  }
+
+  // JS: Auto-grow textarea (home search)
   function autoGrow(el) {
     el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, 200) + 'px';
   }
 
-  // JS: Submit button send on Enter (not Shift+Enter)
-  document.getElementById('searchInput').addEventListener('keydown', (e) => {
+  // JS: Patent quick filter pills — single active
+  function toggleFilter(btn) {
+    document.querySelectorAll('qkfl bt').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // JS: Accordion open/close
+  function toggleAcc() {
+    document.getElementById('accHead').classList.toggle('open');
+    document.getElementById('accBody').classList.toggle('open');
+  }
+
+  // JS: Carousel scroll right
+  function scrollCats() {
+    const scr = document.getElementById('catScr');
+    const cardW = scr.querySelector('catc')?.offsetWidth || 230;
+    scr.scrollBy({ left: cardW + 14, behavior: 'smooth' });
+  }
+
+  // JS: Enter key submits on both pages
+  document.getElementById('homeInput').addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      // Placeholder: animate the submit button
-      const btn = document.getElementById('submitBtn');
-      btn.style.transform = 'scale(.9)';
-      setTimeout(() => btn.style.transform = '', 150);
+      animBtn('homeSubmit');
+    }
+  });
+  document.getElementById('patentInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      animBtn('patentSubmit');
     }
   });
 
-  // JS: Top nav active link switching
-  document.querySelectorAll('navl a').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelectorAll('navl a').forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-    });
-  });
+  function animBtn(id) {
+    const btn = document.getElementById(id);
+    btn.style.transform = 'scale(.85)';
+    setTimeout(() => btn.style.transform = '', 160);
+  }
 </script>
 
 </body>
