@@ -484,6 +484,360 @@
     }
     .cat-next:hover { background: var(--bc-t); box-shadow: 0 0 14px var(--nx-glow); }
 
+    /* ════════════════════════════════════════
+       DISCOVER FEED (home page below hero)
+    ════════════════════════════════════════ */
+    /* CSS: Hero shrinks — only shows wordmark + search, not full-height flex */
+    #page-home hero {
+      min-height: unset;
+      flex: unset;
+      padding: 48px var(--s-xl) 32px;
+      justify-content: flex-start;
+    }
+    #page-home hero::before { top: 40%; }
+
+    /* CSS: Discover section container */
+    disc {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-l);
+      padding: 0 var(--s-xl) var(--s-xl);
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* CSS: Discover header — title + tab filters */
+    disc-hd {
+      display: flex;
+      align-items: center;
+      gap: var(--s-l);
+      flex-wrap: wrap;
+    }
+
+    .disc-title {
+      font-size: 1.05em;
+      font-weight: 600;
+      color: var(--c);
+      letter-spacing: .01em;
+      flex-shrink: 0;
+    }
+
+    .disc-tabs {
+      display: flex;
+      gap: var(--s-xs);
+      flex-wrap: wrap;
+    }
+
+    .disc-tab {
+      font-size: var(--fs-s);
+      color: var(--c0);
+      padding: 5px 12px;
+      border-radius: var(--br-xl);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+    }
+    .disc-tab:hover { color: var(--c); background: var(--bc-t); }
+    .disc-tab.active {
+      color: var(--a);
+      background: var(--a-t);
+      border-color: rgb(58 250 203 / 20%);
+    }
+
+    /* CSS: Featured big card — full width, tall, image with overlay text */
+    disc-feat {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      border-radius: var(--br-l);
+      overflow: hidden;
+      cursor: pointer;
+      display: block;
+    }
+    disc-feat img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform var(--t-slow);
+    }
+    disc-feat:hover img { transform: scale(1.03); }
+
+    .feat-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.3) 50%, rgba(0,0,0,.1) 100%);
+    }
+
+    .feat-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .feat-tag {
+      font-size: var(--fs-xs);
+      color: var(--a);
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: var(--a-t);
+      border: 1px solid rgb(58 250 203 / 20%);
+      padding: 2px 8px;
+      border-radius: var(--br-xl);
+      width: fit-content;
+    }
+
+    .feat-headline {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.35;
+      max-width: 600px;
+    }
+
+    .feat-meta {
+      font-size: var(--fs-xs);
+      color: var(--b-t44, rgb(255 255 255 / 55%));
+      display: flex; align-items: center; gap: 5px;
+    }
+    .feat-meta i { font-size: 10px; }
+
+    /* CSS: 3-column card grid */
+    disc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    /* CSS: Individual discover card */
+    dcard {
+      display: flex;
+      flex-direction: column;
+      background: var(--bcc);
+      border: 1px solid var(--bor);
+      border-radius: var(--br-m);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color var(--t-fast), box-shadow var(--t-fast);
+    }
+    dcard:hover {
+      border-color: rgb(58 250 203 / 20%);
+      box-shadow: 0 8px 28px rgb(0 0 0 / 50%);
+    }
+
+    dcard img {
+      width: 100%; height: 140px;
+      object-fit: cover; display: block;
+      transition: transform var(--t-slow);
+    }
+    dcard:hover img { transform: scale(1.04); }
+
+    .dcard-body {
+      padding: 12px 14px 14px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .dcard-tag {
+      font-size: .6em;
+      color: var(--a);
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .dcard-title {
+      font-size: var(--fs-s);
+      color: var(--c);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .dcard-meta {
+      font-size: .62em;
+      color: var(--c0-t);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .dcard-meta i { font-size: 9px; }
+
+    @media (max-width: 700px) {
+      disc-grid { grid-template-columns: repeat(2, 1fr); }
+      disc { padding: 0 var(--s-l) var(--s-l); }
+      #page-home hero { padding: 32px var(--s-l) 24px; }
+    }
+    @media (max-width: 480px) {
+      disc-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ════════════════════════════════════════
+       CHAT VIEW — replaces home hero+disc when message sent
+    ════════════════════════════════════════ */
+    #page-chat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    chat-hd {
+      display: flex;
+      align-items: center;
+      gap: var(--s-m);
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--bor);
+      flex-shrink: 0;
+    }
+
+    .chat-back {
+      background: none; border: none;
+      color: var(--c0); cursor: pointer;
+      font-size: 14px; padding: 6px;
+      border-radius: var(--br-xs);
+      transition: color var(--t-fast), background var(--t-fast);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .chat-back:hover { color: var(--c); background: var(--bc-t); }
+
+    .chat-query-title {
+      font-size: var(--fs-s);
+      color: var(--c-t);
+      font-weight: 500;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    chat-msgs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bor) transparent;
+    }
+
+    chat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 740px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .msg-user {
+      align-self: flex-end;
+      background: var(--a-t);
+      border: 1px solid rgb(58 250 203 / 22%);
+      border-radius: var(--br-l) var(--br-l) var(--br-xs) var(--br-l);
+      padding: 12px 18px;
+      font-size: var(--fs-s);
+      color: var(--c);
+      max-width: 80%;
+      line-height: var(--lh);
+      word-break: break-word;
+    }
+
+    .msg-ai {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg-ai-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-dot {
+      width: 22px; height: 22px;
+      background: var(--btn);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; color: var(--b);
+      box-shadow: 0 0 8px var(--nx-glow);
+      flex-shrink: 0;
+    }
+
+    .ai-label {
+      font-size: var(--fs-xs);
+      color: var(--a);
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+
+    .msg-ai-body {
+      font-size: var(--fs-s);
+      color: var(--c-t);
+      line-height: 1.75;
+      padding-left: 30px;
+    }
+    .msg-ai-body p { margin-bottom: 10px; }
+    .msg-ai-body p:last-child { margin-bottom: 0; }
+    .msg-ai-body strong { color: var(--c); font-weight: 600; }
+    .msg-ai-body ul { padding-left: 18px; margin: 6px 0; }
+    .msg-ai-body li { margin-bottom: 4px; }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 2px; height: 14px;
+      background: var(--a);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink .7s step-end infinite;
+      border-radius: 1px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .msg-thinking {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding-left: 30px;
+    }
+    .think-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--a);
+      opacity: .4;
+      animation: thinkPulse 1.2s ease-in-out infinite;
+    }
+    .think-dot:nth-child(2) { animation-delay: .2s; }
+    .think-dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes thinkPulse { 0%,100%{opacity:.2;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+
+    .msg-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--s-s);
+      padding-left: 30px;
+    }
+    .msg-act-btn {
+      background: none; border: none;
+      color: var(--c0); cursor: pointer;
+      font-size: 12px; padding: 4px 7px;
+      border-radius: var(--br-xs);
+      display: flex; align-items: center; gap: 4px;
+      font-family: var(--ff);
+      transition: color var(--t-fast), background var(--t-fast);
+    }
+    .msg-act-btn:hover { color: var(--c); background: var(--bc-t); }
+    .msg-act-btn i { font-size: 11px; }
+
+    chat-ft {
+      flex-shrink: 0;
+      padding: 14px 28px 20px;
+      border-top: 1px solid var(--bor);
+      background: var(--b);
+    }
+
+    chat-ft srch {
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
     /* ─── COLLAPSED SIDEBAR ─── */
     app.collapsed sdbar { width: 52px; min-width: 52px; }
     app.collapsed sdbar hd { justify-content: center; }
@@ -566,6 +920,8 @@
 
       <!-- ══ HOME PAGE ══ -->
       <page id="page-home" class="active">
+
+        <!-- HTML: Hero top — wordmark + search centered -->
         <hero>
           <hd><h1 class="wordmark">perplexity</h1></hd>
           <bd>
@@ -596,6 +952,98 @@
             </srch>
           </bd>
         </hero>
+
+        <!-- HTML: Discover feed — image cards grid below search -->
+        <disc>
+          <disc-hd>
+            <h2 class="disc-title">Discover</h2>
+            <div class="disc-tabs">
+              <span class="disc-tab active">For You</span>
+              <span class="disc-tab">Top</span>
+              <span class="disc-tab">Tech &amp; Science</span>
+              <span class="disc-tab">Finance</span>
+              <span class="disc-tab">Arts &amp; Culture</span>
+            </div>
+          </disc-hd>
+
+          <!-- HTML: Featured big card -->
+          <disc-feat>
+            <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&auto=format&fit=crop"
+                 alt="AI neural network — featured article">
+            <div class="feat-overlay"></div>
+            <div class="feat-content">
+              <span class="feat-tag">Technology</span>
+              <h3 class="feat-headline">How Large Language Models Are Reshaping the Future of Human-Computer Interaction</h3>
+              <p class="feat-meta"><i class="fa-regular fa-clock"></i> 4 min read · MIT Technology Review</p>
+            </div>
+          </disc-feat>
+
+          <!-- HTML: Card grid — 3 columns -->
+          <disc-grid>
+
+            <dcard>
+              <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?w=600&auto=format&fit=crop"
+                   alt="Crypto blockchain">
+              <div class="dcard-body">
+                <span class="dcard-tag">Finance</span>
+                <p class="dcard-title">Bitcoin Crosses New Milestone as Institutional Adoption Accelerates Globally</p>
+                <p class="dcard-meta"><i class="fa-regular fa-clock"></i> 3 min · Bloomberg</p>
+              </div>
+            </dcard>
+
+            <dcard>
+              <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&auto=format&fit=crop"
+                   alt="Medical research lab">
+              <div class="dcard-body">
+                <span class="dcard-tag">Health</span>
+                <p class="dcard-title">Breakthrough Gene Therapy Trial Shows 94% Success Rate in Rare Genetic Disorders</p>
+                <p class="dcard-meta"><i class="fa-regular fa-clock"></i> 5 min · Nature</p>
+              </div>
+            </dcard>
+
+            <dcard>
+              <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=600&auto=format&fit=crop"
+                   alt="Space satellite">
+              <div class="dcard-body">
+                <span class="dcard-tag">Science</span>
+                <p class="dcard-title">NASA's New Telescope Captures Unprecedented Images of Distant Exoplanet Atmospheres</p>
+                <p class="dcard-meta"><i class="fa-regular fa-clock"></i> 6 min · NASA</p>
+              </div>
+            </dcard>
+
+            <dcard>
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop"
+                   alt="Electric vehicle charging">
+              <div class="dcard-body">
+                <span class="dcard-tag">Technology</span>
+                <p class="dcard-title">Solid-State Batteries Promise to Double EV Range by 2027, Says New Research</p>
+                <p class="dcard-meta"><i class="fa-regular fa-clock"></i> 4 min · Reuters</p>
+              </div>
+            </dcard>
+
+            <dcard>
+              <img src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&auto=format&fit=crop"
+                   alt="Abstract digital art">
+              <div class="dcard-body">
+                <span class="dcard-tag">Arts &amp; Culture</span>
+                <p class="dcard-title">The AI Art Revolution: How Generative Models Are Redefining Creative Industries</p>
+                <p class="dcard-meta"><i class="fa-regular fa-clock"></i> 7 min · The Atlantic</p>
+              </div>
+            </dcard>
+
+            <dcard>
+              <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&auto=format&fit=crop"
+                   alt="Remote work setup">
+              <div class="dcard-body">
+                <span class="dcard-tag">Business</span>
+                <p class="dcard-title">Global Workforce Study: Hybrid Work Models Show 40% Productivity Gains Over Full Office</p>
+                <p class="dcard-meta"><i class="fa-regular fa-clock"></i> 5 min · HBR</p>
+              </div>
+            </dcard>
+
+          </disc-grid>
+        </disc>
+
       </page>
 
       <!-- ══ PATENTS PAGE ══ -->
@@ -713,77 +1161,315 @@
         </ptnt>
       </page>
 
+
+      <!-- ══ CHAT PAGE ══ -->
+      <page id="page-chat">
+        <chat-hd>
+          <button class="chat-back" onclick="goHome()" title="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span class="chat-query-title" id="chatTitle">New thread</span>
+        </chat-hd>
+        <chat-msgs id="chatMsgs"></chat-msgs>
+        <chat-ft>
+          <srch id="chatSrch">
+            <bd>
+              <textarea id="chatInput" rows="1"
+                placeholder="Ask a follow-up..."
+                oninput="autoGrow(this)"></textarea>
+            </bd>
+            <ft>
+              <div class="srch-left">
+                <button class="plus-btn"><i class="fa-solid fa-plus"></i></button>
+                <button class="tool-btn">
+                  <i class="fa-solid fa-magnifying-glass"></i> Search
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+              </div>
+              <div class="srch-right">
+                <button class="mic-btn"><i class="fa-solid fa-microphone"></i></button>
+                <button class="submit-btn" id="chatSubmit" onclick="sendChatMsg()">
+                  <i class="fa-solid fa-arrow-up"></i>
+                </button>
+              </div>
+            </ft>
+          </srch>
+        </chat-ft>
+      </page>
+
     </pgwrap>
   </main>
 
 </app>
 
 <script>
-  // JS: Sidebar collapse
+  // ─── STATE ───
+  const conversationHistory = [];   // [{role, content}] for Anthropic API
+  let isStreaming = false;
+
+  // ─── SIDEBAR COLLAPSE ───
   document.getElementById('collapseBtn').addEventListener('click', () => {
     document.getElementById('app').classList.toggle('collapsed');
   });
 
-  // JS: Sidebar nav item active state
   function setNaviActive(el) {
     document.querySelectorAll('navi').forEach(n => n.classList.remove('active'));
     el.classList.add('active');
   }
 
-  // JS: Top nav page switching — clicking "Patents" shows patents page, others show home
+  // ─── PAGE SWITCHING ───
+  function showPage(id) {
+    document.querySelectorAll('page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+  }
+
   function switchPage(pageId, linkEl) {
-    // Switch active top-nav link
     document.querySelectorAll('navl a').forEach(a => a.classList.remove('active'));
     linkEl.classList.add('active');
-
-    // Hide all pages, show target
-    document.querySelectorAll('page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + pageId).classList.add('active');
+    showPage(pageId);
   }
 
-  // JS: Auto-grow textarea (home search)
+  function goHome() {
+    showPage('home');
+    document.querySelectorAll('navl a')[0].classList.add('active');
+  }
+
+  // ─── TEXTAREA AUTO-GROW ───
   function autoGrow(el) {
     el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 200) + 'px';
+    el.style.height = Math.min(el.scrollHeight, 180) + 'px';
   }
 
-  // JS: Patent quick filter pills — single active
+  // ─── DISCOVER TABS ───
+  document.querySelectorAll('.disc-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.disc-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // ─── PATENT FILTERS ───
   function toggleFilter(btn) {
     document.querySelectorAll('qkfl bt').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
 
-  // JS: Accordion open/close
+  // ─── ACCORDION ───
   function toggleAcc() {
     document.getElementById('accHead').classList.toggle('open');
     document.getElementById('accBody').classList.toggle('open');
   }
 
-  // JS: Carousel scroll right
+  // ─── CAROUSEL ───
   function scrollCats() {
     const scr = document.getElementById('catScr');
     const cardW = scr.querySelector('catc')?.offsetWidth || 230;
     scr.scrollBy({ left: cardW + 14, behavior: 'smooth' });
   }
 
-  // JS: Enter key submits on both pages
+  // ─── HOME SEARCH SUBMIT ───
+  document.getElementById('homeSubmit').addEventListener('click', () => {
+    const q = document.getElementById('homeInput').value.trim();
+    if (q) startChat(q);
+  });
+
   document.getElementById('homeInput').addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      animBtn('homeSubmit');
-    }
-  });
-  document.getElementById('patentInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      animBtn('patentSubmit');
+      const q = document.getElementById('homeInput').value.trim();
+      if (q) startChat(q);
     }
   });
 
-  function animBtn(id) {
-    const btn = document.getElementById(id);
-    btn.style.transform = 'scale(.85)';
-    setTimeout(() => btn.style.transform = '', 160);
+  // ─── START CHAT — clears history, shows chat page, sends first message ───
+  function startChat(query) {
+    conversationHistory.length = 0;
+    document.getElementById('chatMsgs').innerHTML = '';
+    document.getElementById('chatTitle').textContent = query;
+    document.getElementById('homeInput').value = '';
+    autoGrow(document.getElementById('homeInput'));
+    showPage('chat');
+    sendMessage(query);
+  }
+
+  // ─── CHAT FOLLOW-UP SUBMIT ───
+  document.getElementById('chatSubmit').addEventListener('click', sendChatMsg);
+  document.getElementById('chatInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendChatMsg();
+    }
+  });
+
+  function sendChatMsg() {
+    const input = document.getElementById('chatInput');
+    const q = input.value.trim();
+    if (!q || isStreaming) return;
+    input.value = '';
+    autoGrow(input);
+    sendMessage(q);
+  }
+
+  // ─── CORE: append a chat item with user bubble + AI response ───
+  async function sendMessage(userText) {
+    if (isStreaming) return;
+    isStreaming = true;
+
+    // Push user message to history
+    conversationHistory.push({ role: 'user', content: userText });
+
+    // Build chat-item DOM
+    const msgs = document.getElementById('chatMsgs');
+    const item = document.createElement('chat-item');
+
+    // User bubble
+    const userBubble = document.createElement('div');
+    userBubble.className = 'msg-user';
+    userBubble.textContent = userText;
+    item.appendChild(userBubble);
+
+    // AI block
+    const aiBlock = document.createElement('div');
+    aiBlock.className = 'msg-ai';
+
+    const aiHeader = document.createElement('div');
+    aiHeader.className = 'msg-ai-header';
+    aiHeader.innerHTML = `<div class="ai-dot"><i class="fa-solid fa-asterisk" style="font-size:9px"></i></div><span class="ai-label">perplexity</span>`;
+
+    // Thinking dots
+    const thinking = document.createElement('div');
+    thinking.className = 'msg-thinking';
+    thinking.innerHTML = '<div class="think-dot"></div><div class="think-dot"></div><div class="think-dot"></div>';
+
+    // Answer body
+    const aiBody = document.createElement('div');
+    aiBody.className = 'msg-ai-body';
+
+    aiBlock.appendChild(aiHeader);
+    aiBlock.appendChild(thinking);
+    aiBlock.appendChild(aiBody);
+    item.appendChild(aiBlock);
+    msgs.appendChild(item);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // ─── ANTHROPIC API STREAMING CALL ───
+    let fullText = '';
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          stream: true,
+          system: 'You are Perplexity, a helpful AI assistant. Answer clearly and concisely. Use markdown-style formatting when helpful: **bold** for key terms, bullet points with hyphens for lists. Keep responses informative but not overly long.',
+          messages: conversationHistory
+        })
+      });
+
+      // Remove thinking dots once stream starts
+      thinking.remove();
+
+      // Add blinking cursor
+      const cursor = document.createElement('span');
+      cursor.className = 'typing-cursor';
+      aiBody.appendChild(cursor);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const data = line.slice(6).trim();
+          if (data === '[DONE]') continue;
+          try {
+            const parsed = JSON.parse(data);
+            const delta = parsed?.delta?.text || '';
+            if (delta) {
+              fullText += delta;
+              // Render before cursor
+              cursor.remove();
+              aiBody.innerHTML = renderMarkdown(fullText);
+              aiBody.appendChild(cursor);
+              msgs.scrollTop = msgs.scrollHeight;
+            }
+          } catch (_) {}
+        }
+      }
+
+      // Finalize — remove cursor, render clean
+      cursor.remove();
+      aiBody.innerHTML = renderMarkdown(fullText);
+
+      // Push assistant reply to history for multi-turn
+      conversationHistory.push({ role: 'assistant', content: fullText });
+
+      // Action buttons
+      const actions = document.createElement('div');
+      actions.className = 'msg-actions';
+      actions.innerHTML = `
+        <button class="msg-act-btn" onclick="copyText(this, \`${escJs(fullText)}\`)">
+          <i class="fa-regular fa-copy"></i> Copy
+        </button>
+        <button class="msg-act-btn">
+          <i class="fa-regular fa-thumbs-up"></i>
+        </button>
+        <button class="msg-act-btn">
+          <i class="fa-regular fa-thumbs-down"></i>
+        </button>
+        <button class="msg-act-btn">
+          <i class="fa-solid fa-rotate-right"></i> Retry
+        </button>
+      `;
+      aiBlock.appendChild(actions);
+      msgs.scrollTop = msgs.scrollHeight;
+
+    } catch (err) {
+      thinking.remove();
+      aiBody.innerHTML = '<p style="color:#f87171">Something went wrong. Please try again.</p>';
+      console.error(err);
+    }
+
+    isStreaming = false;
+    document.getElementById('chatInput').focus();
+  }
+
+  // ─── Simple markdown → HTML renderer ───
+  function renderMarkdown(text) {
+    return text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/^#{1,3}\s+(.+)$/gm, '<strong>$1</strong>')
+      .replace(/^- (.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>')
+      .replace(/^(?!<)/, '<p>').replace(/(?<!>)$/, '</p>');
+  }
+
+  // ─── Escape backtick/backslash for template literal in onclick ───
+  function escJs(str) {
+    return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+  }
+
+  // ─── Copy to clipboard ───
+  function copyText(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+      btn.style.color = 'var(--a)';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+        btn.style.color = '';
+      }, 1800);
+    });
   }
 </script>
 
